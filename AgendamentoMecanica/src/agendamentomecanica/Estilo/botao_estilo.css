@@ -1,0 +1,7 @@
+.button_Estilo {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-padding: 10; /* ou ajuste para centralizar bem */
+}

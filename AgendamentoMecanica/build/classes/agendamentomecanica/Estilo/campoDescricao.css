@@ -1,0 +1,12 @@
+.btn {
+    -fx-background-radius: 15px; 
+    -fx-border-radius: 15px;
+
+    -fx-background-insets: 0;
+
+    -fx-font-size: 20px;
+
+-fx-background-color: #949085; 
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #FFFFFF;
+}

@@ -1,0 +1,8 @@
+.botao-arredondado {
+    -fx-background-radius: 20;  
+    -fx-border-radius: 20;      
+    -fx-background-color:  #fdf8e7; 
+    -fx-text-fill: black;       
+    -fx-padding: 10 20 10 20;   
+    -fx-font-size: 35px;
+}

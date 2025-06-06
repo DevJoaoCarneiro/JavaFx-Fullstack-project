@@ -1,0 +1,19 @@
+.date-picker {
+    -fx-background-color: #949085;
+    -fx-text-fill: #655858;
+}
+
+.date-picker .text-field {
+    -fx-background-color: #949085;
+-fx-font-size: 20px;
+    -fx-text-fill: #655858;      
+    -fx-prompt-text-fill: #655858;  
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #949085;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #655858;
+}

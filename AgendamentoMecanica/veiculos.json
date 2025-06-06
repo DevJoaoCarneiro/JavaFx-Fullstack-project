@@ -1,0 +1,30 @@
+[
+  {
+    "modelo": {
+      "name": "",
+      "value": "fiesta",
+      "valid": true
+    },
+    "marca": {
+      "name": "",
+      "value": "dasdasd",
+      "valid": true
+    },
+    "ano": {
+      "name": "",
+      "value": "216165",
+      "valid": true
+    },
+    "placa": {
+      "name": "",
+      "value": "fdgdfg",
+      "valid": true
+    },
+    "comentario": {
+      "name": "",
+      "value": "gdfgdfgdfggfdfgd",
+      "valid": true
+    },
+    "cpfCliente": "10081820950"
+  }
+]

@@ -1,0 +1,25 @@
+.combo-box{
+    -fx-background-color: #949085; 
+-fx-font-size: 20px;
+    -fx-text-fill: #655858; 
+    -fx-background-radius: 12;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-background-insets: 0;
+}
+
+.combo-box .text-field {
+    -fx-prompt-text-fill: #655858;
+    -fx-text-fill: #655858;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #655858;
+    -fx-font-size: 20px;
+}
+
+.combo-box .cell {
+    -fx-text-fill: #655858;
+    -fx-font-size: 20px;
+}
