@@ -3,6 +3,7 @@ package agendamentomecanica;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +30,15 @@ import javafx.stage.Stage;
 
 public class ConsultaController implements Initializable {
 
+    @FXML
+    private Button Buttom_Aberto;
+
+    @FXML
+    private Button Buttom_Andamento;
+
+    @FXML
+    private Button Buttom_Finalizado;
+    
     @FXML
     private Button ConsultaClienteButtom;
 
@@ -80,7 +90,9 @@ public class ConsultaController implements Initializable {
 
     private ObservableList<Veiculo> listaCompletaDeVeiculos;
     private FilteredList<Veiculo> listaFiltradaDeVeiculos;
-
+    private Predicate<Veiculo> filtroDeTexto = p -> true;
+    private Predicate<Veiculo> filtroDeStatus = p -> true;
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -173,6 +185,29 @@ public class ConsultaController implements Initializable {
 
     }
 
+    
+    @FXML
+    private void handleFiltroStatus(ActionEvent event) {
+        Object source = event.getSource();
+
+        if (source == Buttom_Aberto) {
+            filtroDeStatus = veiculo -> veiculo.getStatus() == StatusAgendamento.ABERTO;
+        } else if (source == Buttom_Andamento) {
+            filtroDeStatus = veiculo -> veiculo.getStatus() == StatusAgendamento.EM_ANDAMENTO;
+        } else if (source == Buttom_Finalizado) {
+            filtroDeStatus = veiculo -> veiculo.getStatus() == StatusAgendamento.FINALIZADO;
+        } else { // Assume que qualquer outro botão limpa o filtro
+            filtroDeStatus = p -> true;
+        }
+        
+        aplicarFiltrosCombinados();
+    }
+    
+     private void aplicarFiltrosCombinados() {
+        listaFiltradaDeVeiculos.setPredicate(filtroDeTexto.and(filtroDeStatus));
+    }
+     
+   
     @FXML
     private void voltarParaAgendamento(ActionEvent event) throws IOException {
         Parent telaAgendamento = FXMLLoader.load(getClass().getResource("Agendamento.fxml"));
@@ -209,7 +244,6 @@ public class ConsultaController implements Initializable {
             return;
         }
 
-        // Lógica para avançar o status
         StatusAgendamento statusAtual = veiculoSelecionado.getStatus();
         StatusAgendamento proximoStatus = statusAtual;
 
@@ -221,16 +255,14 @@ public class ConsultaController implements Initializable {
                 proximoStatus = StatusAgendamento.FINALIZADO;
                 break;
             case FINALIZADO:
-                proximoStatus = StatusAgendamento.ABERTO; // Volta para aberto, por exemplo
+                proximoStatus = StatusAgendamento.ABERTO; 
                 break;
         }
         veiculoSelecionado.setStatus(proximoStatus);
 
-        // Força a atualização visual da tabela e salva os dados
         table_view.refresh();
      
 
-        // Mostra a mensagem de confirmação
         mostrarAlerta(Alert.AlertType.INFORMATION, "Status Alterado", "O status do agendamento para a placa " + veiculoSelecionado.getPlaca() + " foi alterado para: " + proximoStatus.toString());
     }
 

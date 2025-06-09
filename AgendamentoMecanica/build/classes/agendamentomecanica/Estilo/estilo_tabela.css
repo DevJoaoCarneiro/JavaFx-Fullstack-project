@@ -1,6 +1,7 @@
 /* Estilo geral para a TableView, removendo bordas e fundo padrão */
 .table-view {
-    -fx-background-color: transparent;
+    -fx-background-color: #f5f5f5; /* Novo fundo cinza claro */
+    -fx-background-radius: 8px; /* Mantém as bordas arredondadas */
 }
 
 /* Estilo para o fundo da área do cabeçalho (onde ficam os títulos "Nome", "CPF", etc.) */

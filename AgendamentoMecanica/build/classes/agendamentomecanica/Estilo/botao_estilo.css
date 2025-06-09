@@ -4,4 +4,6 @@
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
     -fx-padding: 10; /* ou ajuste para centralizar bem */
+    -fx-background-radius: 15px; 
+    -fx-border-radius: 15px;
 }
