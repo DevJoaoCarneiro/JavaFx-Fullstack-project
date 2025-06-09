@@ -33,6 +33,7 @@ public class AgendamentoMecanica extends Application {
         ImageView imageView5 = new ImageView(img5);
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/agendamentomecanica/Estilo/estilo_tabela.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/agendamentomecanica/Estilo/botao_estilo.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/agendamentomecanica/Estilo/estilo2.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/agendamentomecanica/Estilo/comboBox.css").toExternalForm());

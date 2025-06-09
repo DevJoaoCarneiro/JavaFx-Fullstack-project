@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -64,6 +65,9 @@ public class ConsultaController implements Initializable {
 
     @FXML
     private TextField textField_Placa;
+    
+    @FXML
+    private Button botaoConfirmar;
 
     @FXML
     private TableColumn<Veiculo, String> colunaNome;
@@ -128,6 +132,41 @@ public class ConsultaController implements Initializable {
                 }
         );
 
+        //AQUI
+        table_view.setRowFactory(tv -> {
+            TableRow<Veiculo> row = new TableRow<>();
+
+            // Listener que observa o item (Veiculo) contido na linha
+            row.itemProperty().addListener((obs, oldItem, newItem) -> {
+                if (newItem == null) {
+                    // Se a linha estiver vazia, remove todos os estilos
+                    row.getStyleClass().removeAll("status-aberto", "status-andamento", "status-finalizado");
+                } else {
+                    // 1. Aplica o estilo inicial baseado no status atual do item
+                    aplicarEstiloDeStatus(row, newItem.getStatus());
+
+                    // 2. Adiciona um listener NO PRÓPRIO ITEM. Se o status do item mudar,
+                    // a cor da linha muda junto, AUTOMATICamente.
+                    newItem.statusProperty().addListener((statusObs, oldStatus, newStatus) -> {
+                        aplicarEstiloDeStatus(row, newStatus);
+                    });
+                }
+            });
+            return row;
+        });
+
+        // Listener para atualizar a descrição (você já tem este)
+        table_view.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldValue, veiculoSelecionado) -> {
+                if (veiculoSelecionado != null) {
+                    textField_Comentario.setText(veiculoSelecionado.getComentario());
+                } else {
+                    textField_Comentario.clear();
+                }
+            }
+        );
+        
+        
         campoBusca.textProperty().addListener((obs, oldVal, newVal) -> filtrarTabela(newVal));
 
         System.out.println("Tabela de consulta inicializada com " + listaCompletaDeVeiculos.size() + " agendamentos.");
@@ -143,15 +182,56 @@ public class ConsultaController implements Initializable {
         window.show();
     }
     
+     private void aplicarEstiloDeStatus(TableRow<Veiculo> row, StatusAgendamento status) {
+        row.getStyleClass().removeAll("status-aberto", "status-andamento", "status-finalizado");
+
+        if (status != null) {
+            switch (status) {
+                case ABERTO:
+                    row.getStyleClass().add("status-aberto");
+                    break;
+                case EM_ANDAMENTO:
+                    row.getStyleClass().add("status-andamento");
+                    break;
+                case FINALIZADO:
+                    row.getStyleClass().add("status-finalizado");
+                    break;
+            }
+        }
+    }
+    
     @FXML
-    private void handleBotaoConsulta(ActionEvent event) {
-        // Pega o texto que está no campo de busca
-        String termoDeBusca = campoBusca.getText();
+    private void handleConfirmarAgendamento(ActionEvent event) {
+        Veiculo veiculoSelecionado = table_view.getSelectionModel().getSelectedItem();
 
-        // Chama a mesma função de filtro que já existe
-        filtrarTabela(termoDeBusca);
+        if (veiculoSelecionado == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Nenhum Agendamento Selecionado", "Por favor, selecione um agendamento na tabela para confirmar.");
+            return;
+        }
 
-        System.out.println("Busca acionada pelo botão com o termo: " + termoDeBusca);
+        // Lógica para avançar o status
+        StatusAgendamento statusAtual = veiculoSelecionado.getStatus();
+        StatusAgendamento proximoStatus = statusAtual;
+
+        switch (statusAtual) {
+            case ABERTO:
+                proximoStatus = StatusAgendamento.EM_ANDAMENTO;
+                break;
+            case EM_ANDAMENTO:
+                proximoStatus = StatusAgendamento.FINALIZADO;
+                break;
+            case FINALIZADO:
+                proximoStatus = StatusAgendamento.ABERTO; // Volta para aberto, por exemplo
+                break;
+        }
+        veiculoSelecionado.setStatus(proximoStatus);
+
+        // Força a atualização visual da tabela e salva os dados
+        table_view.refresh();
+     
+
+        // Mostra a mensagem de confirmação
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Status Alterado", "O status do agendamento para a placa " + veiculoSelecionado.getPlaca() + " foi alterado para: " + proximoStatus.toString());
     }
 
     private void filtrarTabela(String textoDeBusca) {
@@ -213,4 +293,11 @@ public class ConsultaController implements Initializable {
         window.show();
     }
 
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
 }

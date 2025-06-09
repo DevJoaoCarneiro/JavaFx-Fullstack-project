@@ -1,19 +1,20 @@
 package agendamentomecanica;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Veiculo {
 
-   
     private final StringProperty modelo;
     private final StringProperty marca;
     private final StringProperty ano;
     private final StringProperty placa;
     private final StringProperty comentario;
-    private String cpfCliente; 
+    private String cpfCliente;
+    private final ObjectProperty<StatusAgendamento> status;
 
-    
     public Veiculo(String modelo, String marca, String ano, String placa, String comentario, String cpfCliente) {
         this.modelo = new SimpleStringProperty(modelo);
         this.marca = new SimpleStringProperty(marca);
@@ -21,9 +22,9 @@ public class Veiculo {
         this.placa = new SimpleStringProperty(placa);
         this.comentario = new SimpleStringProperty(comentario);
         this.cpfCliente = cpfCliente; // Armazena o CPF do cliente
+        this.status = new SimpleObjectProperty<>(this, "status", StatusAgendamento.ABERTO);
     }
 
-   
     public Veiculo() {
         this.modelo = new SimpleStringProperty();
         this.marca = new SimpleStringProperty();
@@ -31,9 +32,21 @@ public class Veiculo {
         this.placa = new SimpleStringProperty();
         this.comentario = new SimpleStringProperty();
         this.cpfCliente = null;
+        this.status = new SimpleObjectProperty<>(this, "status", StatusAgendamento.ABERTO);
+    }
+    
+    public StatusAgendamento getStatus() {
+        return status.get();
     }
 
-    
+    public void setStatus(StatusAgendamento status) {
+        this.status.set(status);
+    }
+
+    public ObjectProperty<StatusAgendamento> statusProperty() {
+        return status;
+    }
+
     public String getModelo() {
         return modelo.get();
     }
@@ -94,7 +107,6 @@ public class Veiculo {
         return comentario;
     }
 
-    
     public String getCpfCliente() {
         return cpfCliente;
     }

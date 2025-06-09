@@ -1,0 +1,62 @@
+/* Estilo geral para a TableView, removendo bordas e fundo padrão */
+.table-view {
+    -fx-background-color: transparent;
+}
+
+/* Estilo para o fundo da área do cabeçalho (onde ficam os títulos "Nome", "CPF", etc.) */
+.table-view .column-header-background {
+    -fx-background-color: #67736A; /* Cinza escuro para combinar com sua barra de título */
+}
+
+/* Estilo para o preenchimento do canto superior direito da tabela */
+.table-view .column-header-background .filler {
+    -fx-background-color: #67736A;
+}
+
+/* Estilo para o TEXTO dos títulos das colunas */
+.table-view .column-header {
+    -fx-background-color: transparent; /* Deixa o fundo do texto transparente */
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px;
+}
+
+/* Estilo para cada CÉLULA de dado individual */
+.table-view .table-cell {
+    -fx-border-color: transparent; /* Remove as bordas verticais entre as células */
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333; /* Cor do texto (cinza bem escuro) */
+}
+
+/* ----- ESTILOS DE STATUS PARA AS LINHAS (ROWS) ----- */
+
+.status-aberto {
+    -fx-background-color: #FF2F2F; 
+}
+
+/* Estilo para a linha com status "Em Andamento" */
+.table-row-cell.status-andamento {
+    -fx-background-color: #E4E17E; 
+}
+
+/* Estilo para a linha com status "Finalizado" */
+.table-row-cell.status-finalizado {
+    -fx-background-color: #7AD881; 
+}
+
+
+/* ----- ESTILOS DE SELEÇÃO ----- */
+
+/* Estilo para a linha INTEIRA quando está selecionada */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #3d8eda; /* Azul forte para destacar a seleção */
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+/* Estilo para o TEXTO da célula quando a linha está selecionada */
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+}
