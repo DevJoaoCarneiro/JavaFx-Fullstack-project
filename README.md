@@ -31,6 +31,8 @@ https://github.com/user-attachments/assets/f44ad743-999d-40e5-91c3-b6530e4e529c
   🟢 **Verde** para Finalizado  
   Isso oferece um feedback visual imediato.
 
+##Prototipo no Figma
+![Image](https://github.com/user-attachments/assets/85255bc8-5e8c-498e-94a5-f5e62e4a48d7)
 ---
 
 ## 🚀 Como Executar o Projeto
